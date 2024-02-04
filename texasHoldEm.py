@@ -66,8 +66,17 @@ class TexasHoldemEnv(gym.Env):
 
     def render(self, mode='human'):
         # Render the environment to the screen
-        # Placeholder for your logic
-        pass
+        for player in range(self.num_players):
+            print(f" PLAYER {player + 1}")
+            print(f" {self.map_card(self.state['player_cards'][player][0])} | {self.map_card(self.state['player_cards'][player][1])}")
+        print("TABLE ")
+        for table_card in self.state['table_cards']:
+            print(self.map_card(table_card), end='|')
+        print(f"\n\nPhase: {self.map_phase(self.state['phase'])}")
+        print(f"Pot:{self.state['pot']}")
+        print(f"Bet: {self.state['bet']}")
+        
+        return
 
     def close(self):
         # Perform any cleanup
@@ -81,5 +90,9 @@ class TexasHoldemEnv(gym.Env):
         rank = ranks[card_number % 13]
         return f"{rank} of {suit}"
     
+    def map_phase(self, phase_number):
+        
+        phases = ['Pre-flop', 'Flop', 'Turn', 'River']
+        return phases[phase_number]
 
 
