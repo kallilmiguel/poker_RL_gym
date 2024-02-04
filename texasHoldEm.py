@@ -2,6 +2,7 @@ import gym
 from gym import spaces
 import numpy as np
 from numpy.random import default_rng
+from poker_utils import evaluate_hand
 
 class TexasHoldemEnv(gym.Env):
     """A simplified version of Texas Hold'em poker environment."""
@@ -94,5 +95,8 @@ class TexasHoldemEnv(gym.Env):
         
         phases = ['Pre-flop', 'Flop', 'Turn', 'River']
         return phases[phase_number]
+    
+    def player_table_cards(self, player_number):
 
-
+        cards = list([*self.state['player_cards'][player_number], *self.state['table_cards']])
+        return [self.map_card(card) for card in cards]
